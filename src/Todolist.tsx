@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 export type TaskType = {
     id: string
@@ -33,36 +33,38 @@ export function Todolist(props: PropsType) {
 
     const [newTaskTitle, setNewTaskTitle] = useState("");
 
+    const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskTitle(e.currentTarget.value);
+    }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.ctrlKey && e.charCode === 13) {
+            props.addTasks(newTaskTitle);
+            setNewTaskTitle("");
+        }
+    }
+    const addTask = () => {
+        props.addTasks(newTaskTitle);
+        setNewTaskTitle("");
+    }
 
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
                 <input value={newTaskTitle}
-                       onChange={(e) => {
-                           setNewTaskTitle(e.currentTarget.value);
-                       }}
-                       onKeyPress={(e) => {
-                           if (e.ctrlKey && e.charCode === 13) {
-                               props.addTasks(newTaskTitle);
-                               setNewTaskTitle("");
-                           }
-                       }}
+                       onChange={onNewTitleChangeHandler}
+                       onKeyPress={onKeyPressHandler}
                 />
-                <button onClick={() => {
-                    props.addTasks(newTaskTitle);
-                    setNewTaskTitle("");
-                }}>+
-                </button>
+                <button onClick={addTask}>+</button>
             </div>
             <ul>
                 {currentTasks.map(el => {
+                    const onRemoveHandler = () => {
+                        props.removeTasks(el.id)
+                    }
                     return (
                         <li key={el.id}>
-                            <button onClick={() => {
-                                props.removeTasks(el.id)
-                            }}>x
-                            </button>
+                            <button onClick={onRemoveHandler}>x</button>
                             <input type="checkbox" checked={el.isDone}/>
                             <span>{el.title}</span>
                         </li>
@@ -70,18 +72,9 @@ export function Todolist(props: PropsType) {
                 })}
             </ul>
             <div>
-                <button onClick={() => {
-                    onClickFilterButton("All")
-                }}>All
-                </button>
-                <button onClick={() => {
-                    onClickFilterButton("Active")
-                }}>Active
-                </button>
-                <button onClick={() => {
-                    onClickFilterButton("Completed")
-                }}>Completed
-                </button>
+                <button onClick={() => {onClickFilterButton("All")}}>All</button>
+                <button onClick={() => {onClickFilterButton("Active")}}>Active</button>
+                <button onClick={() => {onClickFilterButton("Completed")}}>Completed</button>
             </div>
         </div>
     )
