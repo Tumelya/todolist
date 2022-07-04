@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 //import {FilterType, TaskType, Todolist} from "./Todolist";
-import {FilterType, Todolist} from "./Todolist";
+import {Todolist} from "./Todolist";
 
 function App() {
 
@@ -30,7 +30,7 @@ function App() {
         setTasks1(tasks1.filter((el) => el.id !== elId));
     }
 
-    let [filter, setFilter] = useState<FilterType>("All");
+    /*let [filter, setFilter] = useState<FilterType>("All");
     let currentTasks = tasks1;
     if (filter === "Active") {
         currentTasks = tasks1.filter((el) => !el.isDone);
@@ -41,14 +41,15 @@ function App() {
 
     const onClickFilterButton = (filterButt: FilterType) => {
         setFilter(filterButt);
-    }
+    }*/
 
     return (
         <div className="App">
             <Todolist title="What to learn"
-                      tasks={currentTasks}
+                      tasks={tasks1}
                       removeTasks={removeTasks}
-                      onClickFilterButton={onClickFilterButton}/>
+                //onClickFilterButton={onClickFilterButton}
+            />
             {/*<Todolist title = "Movies" tasks = {tasks2}/>
             <Todolist title = "Games" tasks = {tasks3}/>*/}
         </div>

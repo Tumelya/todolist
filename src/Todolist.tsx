@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 export type TaskType = {
     id: number
@@ -10,12 +10,26 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTasks: (elId: number) => void
-    onClickFilterButton: (filterButt: FilterType)=> void
+    //onClickFilterButton: (filterButt: FilterType)=> void
 }
 
 export type FilterType = "All" | "Active" | "Completed"
 
 export function Todolist(props: PropsType) {
+
+    let [filter, setFilter] = useState<FilterType>("All");
+    let currentTasks = props.tasks;
+    if (filter === "Active") {
+        currentTasks = props.tasks.filter((el) => !el.isDone);
+    }
+    if (filter === "Completed") {
+        currentTasks = props.tasks.filter((el) => el.isDone);
+    }
+
+    const onClickFilterButton = (filterButt: FilterType) => {
+        setFilter(filterButt);
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -24,7 +38,7 @@ export function Todolist(props: PropsType) {
                 <button>+</button>
             </div>
             <ul>
-                {props.tasks.map(el => {
+                {currentTasks.map(el => {
                     return (
                         <li key={el.id}>
                             <button onClick={()=>{props.removeTasks(el.id)}}>x</button>
@@ -35,9 +49,9 @@ export function Todolist(props: PropsType) {
                 })}
             </ul>
             <div>
-                <button onClick={() => {props.onClickFilterButton("All")}}>All</button>
-                <button onClick={() => {props.onClickFilterButton("Active")}}>Active</button>
-                <button onClick={() => {props.onClickFilterButton("Completed")}}>Completed</button>
+                <button onClick={() => {onClickFilterButton("All")}}>All</button>
+                <button onClick={() => {onClickFilterButton("Active")}}>Active</button>
+                <button onClick={() => {onClickFilterButton("Completed")}}>Completed</button>
             </div>
         </div>
     )
