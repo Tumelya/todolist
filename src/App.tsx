@@ -2,15 +2,16 @@ import React, {useState} from 'react';
 import './App.css';
 //import {FilterType, TaskType, Todolist} from "./Todolist";
 import {Todolist} from "./Todolist";
+import {v1} from "uuid";
 
 function App() {
 
     let [tasks1, setTasks1] = useState([
-        {id: 1, title: "HTML/CSS", isDone: true},
-        {id: 2, title: "JavaScript", isDone: true},
-        {id: 3, title: "TypeScript", isDone: false},
-        {id: 4, title: "React", isDone: false},
-        {id: 5, title: "Redux", isDone: false}
+        {id: v1(), title: "HTML/CSS", isDone: true},
+        {id: v1(), title: "JavaScript", isDone: true},
+        {id: v1(), title: "TypeScript", isDone: false},
+        {id: v1(), title: "React", isDone: false},
+        {id: v1(), title: "Redux", isDone: false}
     ])
 
     /*let tasks2: Array<TaskType> = [
@@ -25,9 +26,19 @@ function App() {
         {id: 3, title: "Volleyball", isDone: true}
     ]*/
 
-    const removeTasks = (elId: number) => {
+    const removeTasks = (elId: string) => {
         //tasks1=tasks1.filter((el) => el.id!==elId);
         setTasks1(tasks1.filter((el) => el.id !== elId));
+    }
+
+    const addTasks = (title: string) => {
+        let newTask = {
+            id: v1(),
+            title: title,
+            isDone: false
+        };
+        let newTasksArr = [newTask, ...tasks1];
+        setTasks1(newTasksArr);
     }
 
     /*let [filter, setFilter] = useState<FilterType>("All");
@@ -48,6 +59,7 @@ function App() {
             <Todolist title="What to learn"
                       tasks={tasks1}
                       removeTasks={removeTasks}
+                      addTasks={addTasks}
                 //onClickFilterButton={onClickFilterButton}
             />
             {/*<Todolist title = "Movies" tasks = {tasks2}/>
