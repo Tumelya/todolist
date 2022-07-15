@@ -37,8 +37,7 @@ function App() {
             title: title,
             isDone: false
         };
-        let newTasksArr = [newTask, ...tasks1];
-        setTasks1(newTasksArr);
+        setTasks1([newTask, ...tasks1]);
     }
 
     /*let [filter, setFilter] = useState<FilterType>("All");
@@ -54,12 +53,21 @@ function App() {
         setFilter(filterButt);
     }*/
 
+    const changeStatus = (tasksId: string, isDone: boolean) => {
+        let task = tasks1.find(t => t.id === tasksId);
+        if (task) {
+            task.isDone = isDone;
+        }
+        setTasks1([...tasks1]);
+    }
+
     return (
         <div className="App">
             <Todolist title="What to learn"
                       tasks={tasks1}
                       removeTasks={removeTasks}
                       addTasks={addTasks}
+                      changeTaskStatus={changeStatus}
                 //onClickFilterButton={onClickFilterButton}
             />
             {/*<Todolist title = "Movies" tasks = {tasks2}/>
