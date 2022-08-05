@@ -75,6 +75,12 @@ function App() {
             setTasks({...tasksObj});
         }
     }
+    const removeTodolist = (todolistId: string) => {
+        let filteredTodolist = todolists.filter(todo => todo.id !== todolistId);
+        setTodolists(filteredTodolist);
+        delete tasksObj[todolistId];
+        setTasks({...tasksObj});
+    }
 
     return (
         <div className="App">
@@ -97,6 +103,7 @@ function App() {
                               filter={todo.filter}
                               currentTasks={currentTasks}
                               onClickFilterButton={onClickFilterButton}
+                              removeTodolist={removeTodolist}
                     />
                 )
             })}
