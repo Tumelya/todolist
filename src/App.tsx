@@ -83,30 +83,36 @@ function App() {
     }
 
     return (
-        <div className="App">
-            {todolists.map((todo) => {
-                let currentTasks = tasksObj[todo.id];
-                if (todo.filter === "Active") {
-                    currentTasks = tasksObj[todo.id].filter((el) => !el.isDone);
-                }
-                if (todo.filter === "Completed") {
-                    currentTasks = tasksObj[todo.id].filter((el) => el.isDone);
-                }
-                return (
-                    <Todolist key={todo.id}
-                              id={todo.id}
-                              title={todo.title}
-                              tasks={currentTasks}
-                              removeTasks={removeTasks}
-                              addTasks={addTasks}
-                              changeTaskStatus={changeStatus}
-                              filter={todo.filter}
-                              currentTasks={currentTasks}
-                              onClickFilterButton={onClickFilterButton}
-                              removeTodolist={removeTodolist}
-                    />
-                )
-            })}
+        <div>
+            <div className="todoInput">
+                <input type="text"/>
+                <button className="plusButton">+</button>
+            </div>
+            <div className="App">
+                {todolists.map((todo) => {
+                    let currentTasks = tasksObj[todo.id];
+                    if (todo.filter === "Active") {
+                        currentTasks = tasksObj[todo.id].filter((el) => !el.isDone);
+                    }
+                    if (todo.filter === "Completed") {
+                        currentTasks = tasksObj[todo.id].filter((el) => el.isDone);
+                    }
+                    return (
+                        <Todolist key={todo.id}
+                                  id={todo.id}
+                                  title={todo.title}
+                                  tasks={currentTasks}
+                                  removeTasks={removeTasks}
+                                  addTasks={addTasks}
+                                  changeTaskStatus={changeStatus}
+                                  filter={todo.filter}
+                                  currentTasks={currentTasks}
+                                  onClickFilterButton={onClickFilterButton}
+                                  removeTodolist={removeTodolist}
+                        />
+                    )
+                })}
+            </div>
         </div>
     );
 }
