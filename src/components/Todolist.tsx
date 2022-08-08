@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState, MouseEvent} from "react";
-import './App.css';
-import {FilterType} from "./App";
+import '../App.css';
+import {FilterType} from "../App";
 
 export type TaskType = {
     id: string
