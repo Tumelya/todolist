@@ -1,13 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState, MouseEvent} from "react";
 import '../App.css';
 import {FilterType} from "../App";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
-
 type PropsType = {
     id: string
     title: string
@@ -54,7 +54,7 @@ export function Todolist(props: PropsType) {
     return (
         <div className="todo">
             <h3>{props.title} <button onClick={removeTodolist}>x</button></h3>
-            <div>
+            {/*<div>
                 <input className={error ? "error" : ""}
                        value={newTaskTitle}
                        onChange={onNewTitleChangeHandler}
@@ -62,7 +62,8 @@ export function Todolist(props: PropsType) {
                 />
                 <button className="plusButton" onClick={addTask}>+</button>
                 {error && <div className="error-message">{error}</div>}
-            </div>
+            </div>*/}
+            <AddItemForm id={props.id} addTasks={props.addTasks}/>
             <ul>
                 {props.currentTasks.map(el => {
                     const onRemoveHandler = () => {
