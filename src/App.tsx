@@ -3,6 +3,7 @@ import './App.css';
 import {TaskType} from "./components/Todolist";
 import {Todolist} from "./components/Todolist";
 import {v1} from "uuid";
+import {AddItemForm} from "./components/AddItemForm";
 
 export type FilterType = "All" | "Active" | "Completed"
 type TodolistsType = {
@@ -49,7 +50,7 @@ function App() {
         tasksObj[todolistId] = filteredTasks;
         setTasks({...tasksObj});
     }
-    const addTasks = (title: string, todolistId: string) => {
+    const addItem = (title: string, todolistId: string) => {
         let newTask = {
             id: v1(),
             title: title,
@@ -81,12 +82,18 @@ function App() {
         delete tasksObj[todolistId];
         setTasks({...tasksObj});
     }
+    const addTodolist = (title: string) => {
+        let todolist: TodolistsType = {
+            id: v1(), title: title, filter: "All"
+        };
+        setTodolists([todolist, ...todolists]);
+        setTasks({...tasksObj, [todolist.id]: []});
+    }
 
     return (
         <div>
             <div className="todoInput">
-                <input type="text"/>
-                <button className="plusButton">+</button>
+                <AddItemForm addItem={addTodolist}/>
             </div>
             <div className="App">
                 {todolists.map((todo) => {
@@ -103,7 +110,7 @@ function App() {
                                   title={todo.title}
                                   tasks={currentTasks}
                                   removeTasks={removeTasks}
-                                  addTasks={addTasks}
+                                  addItem={addItem}
                                   changeTaskStatus={changeStatus}
                                   filter={todo.filter}
                                   currentTasks={currentTasks}

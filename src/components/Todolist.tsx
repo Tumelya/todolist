@@ -13,7 +13,7 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTasks: (elId: string, todolistId: string) => void
-    addTasks: (title: string, todolistId: string) => void
+    addItem: (title: string, todolistId: string) => void
     changeTaskStatus: (tasksId: string, isDone: boolean, todolistId: string) => void
     filter: FilterType
     currentTasks: Array<TaskType>
@@ -22,18 +22,23 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    
+
     const onAllClickHandler = () => props.onClickFilterButton("All", props.id);
     const onActiveClickHandler = () => props.onClickFilterButton("Active", props.id);
     const onCompleteClickHandler = () => props.onClickFilterButton("Completed", props.id);
     const removeTodolist = () => {
         props.removeTodolist(props.id);
     }
+    const addItem = (title: string) => {
+        props.addItem(title, props.id);
+    }
 
     return (
         <div className="todo">
-            <h3>{props.title} <button onClick={removeTodolist}>x</button></h3>
-            <AddItemForm id={props.id} addTasks={props.addTasks}/>
+            <h3>{props.title}
+                <button onClick={removeTodolist}>x</button>
+            </h3>
+            <AddItemForm addItem={addItem}/>
             <ul>
                 {props.currentTasks.map(el => {
                     const onRemoveHandler = () => {
