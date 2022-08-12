@@ -32,6 +32,10 @@
     color: red;
 }
 
+button {
+    margin-right: 5px;
+}
+
 .priorityButton, .priorityButtonActive, .plusButton {
     border: none;
     border-radius: 7px;
