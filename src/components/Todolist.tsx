@@ -3,6 +3,8 @@ import '../App.css';
 import {FilterType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Checkbox, IconButton} from "@mui/material";
+import {Delete, Favorite, FavoriteBorder} from "@mui/icons-material";
 
 export type TaskType = {
     id: string
@@ -42,11 +44,13 @@ export function Todolist(props: TodolistPropsType) {
     return (
         <div className="todo">
             <h3>
-                <button onClick={removeTodolist}>x</button>
+                <IconButton aria-label="delete" onClick={removeTodolist}>
+                    <Delete/>
+                </IconButton>
                 <EditableSpan title={props.title} onChange={changeTodolistTitle}/>
             </h3>
             <AddItemForm addItem={addItem}/>
-            <ul>
+            <div>
                 {props.currentTasks.map(el => {
                     const onRemoveHandler = () => {
                         props.removeTasks(el.id, props.id);
@@ -58,14 +62,28 @@ export function Todolist(props: TodolistPropsType) {
                         props.changeTaskTitle(el.id, value, props.id);
                     }
                     return (
-                        <li key={el.id} className={el.isDone ? "isDone" : ""}>
-                            <button onClick={onRemoveHandler}>x</button>
+                        <div key={el.id} className={el.isDone ? "isDone" : ""}>
+                            {/*<button onClick={onRemoveHandler}>x</button>*/}
+                            <IconButton aria-label="delete" onClick={onRemoveHandler}>
+                                <Delete/>
+                            </IconButton>
+                            <Checkbox
+                                icon={<FavoriteBorder fontSize="small"/>}
+                                checkedIcon={<Favorite fontSize="small"/>}
+                                name="checkedH"/>
+                            {/*<Checkbox
+                                icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
+                                checkedIcon={<CheckBoxIcon fontSize="small"/>}
+                                name="checkedI"
+                                onClick={onChangeHandler}
+                                checked={el.isDone}
+                            />*/}
                             <input onClick={onChangeHandler} type="checkbox" checked={el.isDone}/>
                             <EditableSpan title={el.title} onChange={onChangeTitleHandler}/>
-                        </li>
+                        </div>
                     )
                 })}
-            </ul>
+            </div>
             <div>
                 <button className={props.filter === "All" ? "priorityButtonActive" : "priorityButton"}
                         onClick={onAllClickHandler}>All
